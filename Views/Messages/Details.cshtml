@@ -1,0 +1,62 @@
+@model SecureMailApp.Models.EmailMessage
+@using System.Globalization
+
+
+@{
+ViewData["Title"] = "Message Details";
+bool hashValid = Model.IsHashValid;
+bool sigValid = Model.IsSignatureValid;
+string content = Model.DecryptedBody;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">Message Details</h2>
+            <a class="btn btn-outline-secondary" asp-controller="Messages" asp-action="Inbox">
+                Back to Inbox
+            </a>
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong>From:</strong> @Model.Sender.Email (@Model.Sender.UserName)
+                </div>
+                <div class="mb-2">
+                    <strong>To:</strong> @Model.Receiver.Email (@Model.Receiver.UserName)
+                </div>
+                <div class="mb-2">
+                    <strong>Subject:</strong> @Model.DecryptedSubject
+                </div>
+                <div class="mb-2">
+                    <strong>Date:</strong> @Model.CreatedAt.ToString("f", new CultureInfo("en-US"))
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header">
+                <strong>Content</strong>
+            </div>
+            <div class="card-body">
+                <p class="mb-0" style="white-space: pre-wrap;">@content</p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <strong>Security Checks</strong>
+            </div>
+            <div class="card-body d-flex gap-3">
+                <span class="badge @(hashValid ? " bg-success" : "bg-danger" )">
+                    Hash @(hashValid ? "Valid" : "Invalid")
+                </span>
+                <span class="badge @(sigValid ? " bg-success" : "bg-danger" )">
+                    Signature @(sigValid ? "Valid" : "Invalid")
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
