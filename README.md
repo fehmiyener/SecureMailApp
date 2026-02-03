@@ -192,7 +192,4 @@ This project demonstrates:
 - A complete full-stack web application  
 - Practical use of cryptography in software  
 - Secure software development principles  
-- Integration of backend, frontend, and security mechanisms  
-
-- Fehmi Yener  
-- Merve Duman  
+- Integration of backend, frontend, and security mechanisms   
